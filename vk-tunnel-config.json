@@ -1,0 +1,9 @@
+{
+	"app_id": "51775399",
+	"endpoints": ["mobile", "mvk", "web"],
+	"port": 3000,
+	"http-protocol": "http",
+	"ws-protocol": "ws",
+	"timeout": 15000,
+	"insecure": true
+}

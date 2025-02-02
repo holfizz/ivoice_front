@@ -1,0 +1,56 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@keyframes wave {
+	0%,
+	100% {
+		transform: scaleY(0.5);
+	}
+	50% {
+		transform: scaleY(1);
+	}
+}
+
+.animate-wave {
+	animation: wave 1.5s ease-in-out infinite;
+}
+
+/* Запрет выделения текста и других действий */
+body {
+	@apply text-gray-900 bg-gray-50;
+	-webkit-tap-highlight-color: transparent;
+	-webkit-touch-callout: none;
+	-webkit-user-select: none;
+	-khtml-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+}
+
+/* Запрет перетаскивания изображений */
+img {
+	-webkit-user-drag: none;
+	-khtml-user-drag: none;
+	-moz-user-drag: none;
+	-o-user-drag: none;
+	user-drag: none;
+}
+
+/* Стили для input range, чтобы они оставались кликабельными */
+input[type='range'] {
+	@apply cursor-pointer;
+	-webkit-user-select: auto;
+	-khtml-user-select: auto;
+	-moz-user-select: auto;
+	-ms-user-select: auto;
+	user-select: auto;
+}
+
+/* Запрет контекстного меню */
+* {
+	-webkit-context-menu: none;
+	-moz-context-menu: none;
+	-ms-context-menu: none;
+	context-menu: none;
+}
