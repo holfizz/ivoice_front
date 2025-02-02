@@ -73,14 +73,6 @@ const voiceGroups: VoiceGroup[] = [
 	},
 ]
 
-declare global {
-	interface Window {
-		Telegram: {
-			WebApp: any
-		}
-	}
-}
-
 export default function Home() {
 	const [selectedVoice, setSelectedVoice] = useState<string | null>(null)
 	const [isDrawerOpen, setIsDrawerOpen] = useState(false)

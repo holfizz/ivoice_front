@@ -7,12 +7,6 @@ interface TelegramWebApp {
 	WebApp: any
 }
 
-declare global {
-	interface Window {
-		Telegram: TelegramWebApp
-	}
-}
-
 const TelegramContext = createContext<any>(null)
 
 export function TelegramProvider({ children }: { children: React.ReactNode }) {
@@ -21,7 +15,9 @@ export function TelegramProvider({ children }: { children: React.ReactNode }) {
 	useEffect(() => {
 		const app = window.Telegram?.WebApp
 		if (app) {
+			//@ts-ignore
 			app.ready()
+			//@ts-ignore
 			app.expand()
 			setWebApp(app)
 		}

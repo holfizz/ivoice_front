@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react'
 
 declare global {
 	interface Window {
+		// @ts-ignore
 		Telegram: {
 			WebApp: {
 				close: () => void
