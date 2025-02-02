@@ -69,7 +69,7 @@ const VOICE_OPTIONS: VoiceOption[] = [
 ]
 
 // Используем локальный URL для бэкенда
-const API_BASE_URL = 'http://localhost:6060'
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL
 
 export function SettingsPanel({
 	speed,
