@@ -83,6 +83,7 @@ export function SettingsPanel({
 	const [userId, setUserId] = useState<string | null>(null)
 
 	useEffect(() => {
+		// Получаем userId из URL параметров
 		const urlParams = new URLSearchParams(window.location.search)
 		const userIdFromUrl = urlParams.get('userId')
 		console.log('Frontend: Got userId from URL:', userIdFromUrl)
@@ -105,14 +106,9 @@ export function SettingsPanel({
 			console.log('Frontend: Voice mapping:', {
 				originalVoice: selectedVoice,
 				mappedVoice: backendVoiceId,
-				allMappings: VOICE_MAP,
 			})
 
-			console.log('Frontend: Sending settings to API', {
-				userId,
-				settings: { voiceId: backendVoiceId, speed, pitch },
-			})
-
+			// Отправляем данные через API
 			const response = await axios.post(
 				`${API_BASE_URL}/api/voice/settings?userId=${userId}`,
 				{
@@ -125,7 +121,11 @@ export function SettingsPanel({
 			)
 
 			console.log('Frontend: API Response:', response.data)
-			window.Telegram.WebApp.close()
+
+			// Закрываем веб-приложение после успешного обновления
+			if (window.Telegram?.WebApp) {
+				window.Telegram.WebApp.close()
+			}
 		} catch (error) {
 			console.error('Frontend: Error updating settings:', error)
 			if (axios.isAxiosError(error)) {
