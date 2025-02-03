@@ -83,11 +83,10 @@ export function SettingsPanel({
 	const [userId, setUserId] = useState<string | null>(null)
 
 	useEffect(() => {
-		// Получаем userId из URL параметров
-		const urlParams = new URLSearchParams(window.location.search)
-		const userIdFromUrl = urlParams.get('userId')
-		console.log('Frontend: Got userId from URL:', userIdFromUrl)
-		setUserId(userIdFromUrl)
+		// Получаем userId из пути URL
+		const userId = window.location.pathname.slice(1) // удаляем начальный слэш
+		console.log('Frontend: Got userId from path:', userId)
+		setUserId(userId)
 	}, [])
 
 	const handleApply = async () => {
@@ -96,7 +95,7 @@ export function SettingsPanel({
 		onApply()
 
 		if (!userId) {
-			console.error('Frontend: No userId found in URL')
+			console.error('Frontend: No userId found in path')
 			return
 		}
 
@@ -122,7 +121,6 @@ export function SettingsPanel({
 
 			console.log('Frontend: API Response:', response.data)
 
-			// Закрываем веб-приложение после успешного обновления
 			if (window.Telegram?.WebApp) {
 				window.Telegram.WebApp.close()
 			}
