@@ -83,11 +83,11 @@ export function SettingsPanel({
 	const [userId, setUserId] = useState<string | null>(null)
 
 	useEffect(() => {
-		// Получаем userId из URL параметров
-		const urlParams = new URLSearchParams(window.location.search)
-		const userIdFromUrl = urlParams.get('userId')
-		console.log('Frontend: Got userId from URL:', userIdFromUrl)
-		setUserId(userIdFromUrl)
+		// Получаем userId из пути URL
+		const pathParts = window.location.pathname.split('/')
+		const userIdFromPath = pathParts[1] // Берем первый сегмент после /
+		console.log('Frontend: Got userId from path:', userIdFromPath)
+		setUserId(userIdFromPath)
 	}, [])
 
 	const handleApply = async () => {
@@ -96,7 +96,7 @@ export function SettingsPanel({
 		onApply()
 
 		if (!userId) {
-			console.error('Frontend: No userId found in URL')
+			console.error('Frontend: No userId found in URL path')
 			return
 		}
 
@@ -109,23 +109,18 @@ export function SettingsPanel({
 			})
 
 			// Отправляем данные через API
-			const response = await axios.post(
-				`${API_BASE_URL}/api/voice/settings?userId=${userId}`,
-				{
-					settings: {
-						voiceId: backendVoiceId,
-						speed: speed,
-						pitch: pitch,
-					},
-				}
-			)
+			const response = await axios.post(`${API_BASE_URL}/api/voice/settings`, {
+				userId: userId,
+				settings: {
+					voiceId: backendVoiceId,
+					speed: speed,
+					pitch: pitch,
+				},
+			})
 
 			console.log('Frontend: API Response:', response.data)
 
-			// Закрываем веб-приложение после успешного обновления
-			if (window.Telegram?.WebApp) {
-				window.Telegram.WebApp.close()
-			}
+			window.close()
 		} catch (error) {
 			console.error('Frontend: Error updating settings:', error)
 			if (axios.isAxiosError(error)) {
